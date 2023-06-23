@@ -1,8 +1,10 @@
-1. login for auth
+1. npm install -g firebase-tools
+
+2. login for auth
 ```
 firebase login
 ```
-2. init some configs
+3. init some configs
 ```
 firebase init
 ```
@@ -32,7 +34,9 @@ In angular.json:
   }
 }
 ```
-
+4. build
+build the app
+5. deploy
 after deploy, the url will be generated faster than server is ready. so we need to wait in a short period of time to let the pages display your app rather than default firebase page.
 ```
 firebase deploy
