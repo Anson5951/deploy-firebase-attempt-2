@@ -1,27 +1,39 @@
-# DeployFirebaseAttempt2
+1. login for auth
+```
+firebase login
+```
+2. init some configs
+```
+firebase init
+```
+firebase will ask some question in command prompt. answer following questions as below. especially "What do you want to use as your public directory? dist". The only diffecrent from attempt 1 which makes this attempt works.
+ - Are you ready to proceed? Yes
+ - Which Firebase features do you want to set up for this directory? Hosting: Configure files for Firebase Hosting and (optionally) set up GitHub Action deploys
+ - Please select an option? Use an existing project
+ - Select a default Firebase project for this directory: test-for-firebase-845ca (test for firebase)
+ - What do you want to use as your public directory? dist
+ - Configure as a single-page app (rewrite all urls to /index.html)? Yes
+ - Set up automatic builds and deploys with GitHub? No
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.1.
+In angular.json:
+```json 
+{
+  "projects": {
+    "deploy-firebase-attempt-2": {
+        "architect": {
+          "build": {
+            "builder": "@angular-devkit/build-angular:browser",
+            "options": {
+              "outputPath": "dist", <--- must match to the answer above -->
+            }
+          }
+        }
+    }
+  }
+}
+```
 
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+after deploy, the url will be generated faster than server is ready. so we need to wait in a short period of time to let the pages display your app rather than default firebase page.
+```
+firebase deploy
+```
