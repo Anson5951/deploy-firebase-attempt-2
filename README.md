@@ -1,5 +1,7 @@
-1. npm install -g firebase-tools
-
+1. install firebase
+```
+npm install -g firebase-tools
+```
 2. login for auth
 ```
 firebase login
