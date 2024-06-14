@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
-import { FirebaseStorage, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { FirebaseStorage, getBlob, getBytes, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { from, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -25,17 +25,20 @@ export class StorageService {
       console.log('Uploaded a blob or file!', snapshot);
     });
   }
-/**
- * Access to XMLHttpRequest at 'https://firebasestorage.googleapis.com/v0/b/test-for-firebase-845ca.appspot.com/o/images%2Fdog.jpg?alt=media&token=fe5d974e-7aa6-4648-9d7d-156dac30b6ca' from origin 'http://localhost:4200' has been blocked by CORS policy: Request header field access-control-allow-origin is not allowed by Access-Control-Allow-Headers in preflight response.
- */
-getTestFile() {
 
-    return from(getDownloadURL(ref(this.storage, 'images/dog.jpg'))).pipe(
-      switchMap(url => (this.http.get(url, {
-        headers: {
-          'Access-Control-Allow-Origin': 'true'
-        }
-      })))
-    );
+  getTestFile() {
+    return from(getBytes(ref(this.storage, 'images/black_man_questions_mark.jpg')))
+      // .pipe(
+      //   switchMap(url => {
+      //     debugger
+      //     return this.http.post(url, {
+      //       headers: {
+      //         'Access-Control-Allow-Headers': 'Content-Type',
+      //         'Access-Control-Allow-Methods': 'POST, GET, PUT',
+      //         'Access-Control-Allow-Origin': '*'
+      //       }
+      //     })
+      //   }))
+      ;
   }
 }

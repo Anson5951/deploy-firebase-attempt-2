@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, runTransaction, set } from 'firebase/database';
 import { environment } from 'src/environments/environment';
@@ -22,7 +23,8 @@ export class AppComponent {
     private dataService: DataService,
     private realTimeDataService: RealTimeDataService,
     private storageService: StorageService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -38,19 +40,22 @@ export class AppComponent {
   }
 
   private testCloudFireStore() {
-    this.dataService.getUsers().subscribe(data => {
-      data.forEach((doc) => {
-        console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
-      });
-    });
-    this.dataService.writeUser({
-      first: 'david',
-      last: 'johnson',
-      born: 1895,
-    }).subscribe({
-      next: docRef => console.log("Document written with ID: ", docRef.id),
-      error: error => console.log('error: ', error)
-    });
+    // this.dataService.getUsers().subscribe(data => {
+
+    //   const user = new User(data);
+
+    //   data.forEach((doc) => {
+    //     console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
+    //   });
+    // });
+    // this.dataService.writeUser({
+    //   first: 'david',
+    //   last: 'johnson',
+    //   born: 1895,
+    // }).subscribe({
+    //   next: docRef => console.log("Document written with ID: ", docRef.id),
+    //   error: error => console.log('error: ', error)
+    // });
   }
 
   private testRealTimeDatabase() {
@@ -84,31 +89,5 @@ export class AppComponent {
     this.realTimeDataService.getDataByPath('users');
     this.realTimeDataService.getDataByPath('/test');
     this.realTimeDataService.getDataByPath('/users');
-  }
-
-  onFileSelected(event: any) {
-    // Good! upload success!
-    // this.storageService.uploadFile(event.target.files[0]);
-
-    // Well, guess I can only get the file on this event 0.0
-    this.file = event.target.files[0];
-  }
-  uploadFile() {
-    if (this.file)
-      this.storageService.uploadFile(this.file);
-  }
-  downloadFile() {
-    this.storageService.getTestFile().subscribe((file: any) => {
-      var element = document.createElement('a');
-      element.setAttribute('href', 'data:image/jpeg,' + encodeURIComponent(file));
-      element.setAttribute('download', file.name);
-
-      element.style.display = 'none';
-      document.body.appendChild(element);
-
-      element.click();
-
-      document.body.removeChild(element);
-    });
   }
 }

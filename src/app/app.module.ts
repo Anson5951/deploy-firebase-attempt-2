@@ -6,11 +6,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoFiComponent } from './lo-fi/lo-fi.component';
 import { HttpClientModule } from '@angular/common/http';
+import { TwitchViewComponent } from './twitch-view/twitch-view.component';
+import { DiceComponent } from './dice/dice.component';
+import { AnimateTriggerComponent } from './animate-trigger/animate-trigger.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoFiComponent
+    LoFiComponent,
+    TwitchViewComponent,
+    DiceComponent,
+    AnimateTriggerComponent
   ],
   imports: [
     BrowserModule,
@@ -18,6 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
