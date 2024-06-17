@@ -1,6 +1,7 @@
 <div class="no-overflow">
+  <!-- version 1 -->
   <iframe width="50%" style="height: 50vh;"
-    src="https://www.youtube.com/embed/MPtVZVPzzmI?si=wYMmInuXIrImKbyl&autoplay=1&loop=1&playlist=MPtVZVPzzmI&mute=1&vq=hd720"
+    src="https://www.youtube.com/embed/lFvtN2eV96M?si=wYMmInuXIrImKbyl&autoplay=1&loop=1&playlist=lFvtN2eV96M&mute=1&vq=hd720"
     title="YouTube video player" frameborder="0"
     allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -19,4 +20,21 @@
     title="YouTube video player" frameborder="0"
     allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+  <!-- version 2 -->
+  <!-- <youtube-player #player [videoId]="vedioIds[0]" [playerVars]="playerVars" (mouseenter)="player.pauseVideo()"
+    (mouseleave)="player.playVideo()" />
+  <youtube-player #player [videoId]="vedioIds[1]" [playerVars]="playerVars" (mouseenter)="player.pauseVideo()"
+    (mouseleave)="player.playVideo()" />
+  <youtube-player #player [videoId]="vedioIds[2]" [playerVars]="playerVars" (mouseenter)="player.pauseVideo()"
+    (mouseleave)="player.playVideo()" />
+  <youtube-player #player [videoId]="vedioIds[3]" [playerVars]="playerVars" (mouseenter)="player.pauseVideo()"
+    (mouseleave)="player.playVideo()" /> -->
+
+  <!-- version 3 -->
+  <!-- <ng-container *ngFor="let vedioId of vedioIds; let i = index">
+    <youtube-player #player [videoId]="vedioId" [playerVars]="playerVarsList[i]" (ready)="this.player.mute()" />
+  </ng-container> -->
+
 </div>
