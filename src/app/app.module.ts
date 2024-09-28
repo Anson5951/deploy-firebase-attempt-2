@@ -1,3 +1,4 @@
+import { YoutubeComponent } from './components/youtube/youtube.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -26,6 +27,7 @@ import { YeahComponent } from './yeah/yeah.component';
     HttpClientModule,
     BrowserAnimationsModule,
     YouTubePlayerModule,
+    YoutubeComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

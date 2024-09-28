@@ -1,29 +1,29 @@
 <div class="no-overflow">
-  <!-- version 1 -->
-  <iframe width="50%" style="height: 50vh;"
-    src="https://www.youtube.com/embed/lFvtN2eV96M?si=wYMmInuXIrImKbyl&autoplay=1&loop=1&playlist=lFvtN2eV96M&mute=1&vq=hd720"
-    title="YouTube video player" frameborder="0"
-    allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-  <iframe width="50%" style="height: 50vh;"
-    src="https://www.youtube.com/embed/PJH2AscfsNc?si=li4gQUsCXl0N6chJ&autoplay=1&loop=1&playlist=PJH2AscfsNc&mute=1&vq=hd720"
-    title="YouTube video player" frameborder="0"
-    allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-  <iframe width="50%" style="height: 50vh;"
-    src="https://www.youtube.com/embed/qDrA2p2xSRo?si=8vep8cqCiWVtWt3P&autoplay=1&loop=1&playlist=qDrA2p2xSRo&mute=1&vq=hd720"
-    title="YouTube video player" frameborder="0"
-    allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-  <iframe width="50%" style="height: 50vh;"
-    src="https://www.youtube.com/embed/ASXBfG4JTAo?si=Gk1HJ_NO2pJWVv9e&autoplay=1&loop=1&playlist=ASXBfG4JTAo&mute=1&vq=hd720"
-    title="YouTube video player" frameborder="0"
-    allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <!-- version 1 -->
+    <!-- <iframe width="50%" style="height: 50vh;"
+        src="https://www.youtube.com/embed/lFvtN2eV96M?si=wYMmInuXIrImKbyl&autoplay=1&loop=1&playlist=lFvtN2eV96M&mute=1&vq=hd720"
+        title="YouTube video player" frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="50%" style="height: 50vh;"
+        src="https://www.youtube.com/embed/PJH2AscfsNc?si=li4gQUsCXl0N6chJ&autoplay=1&loop=1&playlist=PJH2AscfsNc&mute=1&vq=hd720"
+        title="YouTube video player" frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="50%" style="height: 50vh;"
+        src="https://www.youtube.com/embed/qDrA2p2xSRo?si=8vep8cqCiWVtWt3P&autoplay=1&loop=1&playlist=qDrA2p2xSRo&mute=1&vq=hd720"
+        title="YouTube video player" frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="50%" style="height: 50vh;"
+        src="https://www.youtube.com/embed/ASXBfG4JTAo?si=Gk1HJ_NO2pJWVv9e&autoplay=1&loop=1&playlist=ASXBfG4JTAo&mute=1&vq=hd720"
+        title="YouTube video player" frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
 
 
-  <!-- version 2 -->
-  <!-- <youtube-player #player [videoId]="vedioIds[0]" [playerVars]="playerVars" (mouseenter)="player.pauseVideo()"
+    <!-- version 2 -->
+    <!-- <youtube-player #player [videoId]="vedioIds[0]" [playerVars]="playerVars" (mouseenter)="player.pauseVideo()"
     (mouseleave)="player.playVideo()" />
   <youtube-player #player [videoId]="vedioIds[1]" [playerVars]="playerVars" (mouseenter)="player.pauseVideo()"
     (mouseleave)="player.playVideo()" />
@@ -32,9 +32,14 @@
   <youtube-player #player [videoId]="vedioIds[3]" [playerVars]="playerVars" (mouseenter)="player.pauseVideo()"
     (mouseleave)="player.playVideo()" /> -->
 
-  <!-- version 3 -->
-  <!-- <ng-container *ngFor="let vedioId of vedioIds; let i = index">
+    <!-- version 3 -->
+    <!-- <ng-container *ngFor="let vedioId of vedioIds; let i = index">
     <youtube-player #player [videoId]="vedioId" [playerVars]="playerVarsList[i]" (ready)="this.player.mute()" />
   </ng-container> -->
 
+    <!-- version 4 -->
+    <app-youtube style="width: 50vw; height: 50vh; display: inline-block;" [exitKey]="'1'"></app-youtube>
+    <app-youtube style="width: 50vw; height: 50vh; display: inline-block;" [exitKey]="'2'"></app-youtube>
+    <app-youtube style="width: 50vw; height: 50vh; display: inline-block;" [exitKey]="'3'"></app-youtube>
+    <app-youtube style="width: 50vw; height: 50vh; display: inline-block;" [exitKey]="'4'"></app-youtube>
 </div>
