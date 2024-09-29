@@ -8,22 +8,22 @@ import { YouTubePlayer } from '@angular/youtube-player';
 })
 export class YeahComponent implements OnInit {
 
-    readonly vedioIds: string[] = [
-        'NajJFMnGMf0',
-        'PJH2AscfsNc',
-        'IXdszpdqzec',
-        'SWEyHRr12Jo',
-    ]
-    readonly playerVars: YT.PlayerVars = {
-        autoplay: 1,
-        loop: 0,
-    }
-    playerVarsList: YT.PlayerVars[] = [];
+    // readonly vedioIds: string[] = [
+    //     'NajJFMnGMf0',
+    //     'PJH2AscfsNc',
+    //     'IXdszpdqzec',
+    //     'SWEyHRr12Jo',
+    // ]
+    // readonly playerVars: YT.PlayerVars = {
+    //     autoplay: 1,
+    //     loop: 0,
+    // }
+    // playerVarsList: YT.PlayerVars[] = [];
 
     ngOnInit(): void {
-        this.playerVarsList = this.vedioIds.map(x => ({
-            ...this.playerVars,
-            playlist: x
-        }) as YT.PlayerVars)
+        // this.playerVarsList = this.vedioIds.map(x => ({
+        //     ...this.playerVars,
+        //     playlist: x
+        // }) as YT.PlayerVars)
     }
 }

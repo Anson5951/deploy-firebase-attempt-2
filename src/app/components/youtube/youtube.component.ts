@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { NgModel, FormsModule } from '@angular/forms';
 
 @Component({
@@ -13,9 +13,9 @@ import { NgModel, FormsModule } from '@angular/forms';
     styleUrls: ['./youtube.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class YoutubeComponent {
+export class YoutubeComponent implements AfterViewInit {
 
-    @Input({ alias: 'exitKey', required: true }) exitKey: string | undefined = '';
+    @Input({ alias: 'exitKey', required: true }) exitKey: string = '';
     @ViewChild('iframe') iframe: ElementRef | undefined;
     @HostListener('window:keydown', ['$event'])
     handleKeyDown(event: KeyboardEvent) {
@@ -26,25 +26,46 @@ export class YoutubeComponent {
             }
         }
     }
-
-    // it should be a youtube url or a shared youtube link
+    /**
+     *
+     * it should be a youtube url or a shared youtube link\
+     * ex:\
+     * https://www.youtube.com/watch?v=qYspJLIHNyI&t=1231s \
+     * https://www.youtube.com/watch?v=qYspJLIHNyI \
+     * https://youtu.be/qYspJLIHNyI?si=_thQJaik6M8uRTj_&t=1236 \
+     * https://youtu.be/qYspJLIHNyI?si=_thQJaik6M8uRTj_
+     *
+     */
     input = '';
     youtubeLink = '';
     inputVisible = true;
 
+    ngAfterViewInit(): void {
+        const vedioId = localStorage.getItem(this.exitKey);
+        console.log('vedioId', vedioId);
+        this.openVedio(vedioId ?? '')
+    }
+
     onConfirm() {
         if (this.input.length == 0) return;
         const vedioId = this.convertInputToVedioId();
-        this.inputVisible = false;
-        if (this.iframe != null) {
-            this.iframe.nativeElement.src = `https://www.youtube.com/embed/${vedioId}?si=${vedioId}&autoplay=1&mute=1&vq=720&loop=1&playlist=${vedioId}`;
-        }
+        this.openVedio(vedioId)
+        localStorage.setItem(this.exitKey, vedioId)
     }
 
     onEnter(event: KeyboardEvent) {
         console.log(event);
         if (event.key === 'Enter') {
             this.onConfirm();
+        }
+    }
+
+    private openVedio(vedioId: string) {
+        if (vedioId != '') {
+            this.inputVisible = false;
+            if (this.iframe != null) {
+                this.iframe.nativeElement.src = `https://www.youtube.com/embed/${vedioId}?si=${vedioId}&autoplay=1&mute=1&vq=720&loop=1&playlist=${vedioId}`;
+            }
         }
     }
 
