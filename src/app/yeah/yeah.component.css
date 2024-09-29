@@ -1,4 +1,56 @@
-.no-overflow {
-  overflow: hidden;
-  height: 100vh;
+.video-container {
+    display: flex;
+    gap: 0px;
+    row-gap: 0px;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100vh;
+    justify-content: space-between;
+    align-content: flex-start;
+    overflow-y: hidden;
+}
+
+.video {
+    width: calc(50% - 0px);
+    height: calc(50% - 0px);
+}
+
+.layout-type {
+    background-color: white;
+    width: 100%;
+    height: 33%;
+    border: 1px solid rgb(255, 255, 182);
+    display: flex;
+    gap: 1px;
+    row-gap: 1px;
+    flex-wrap: wrap;
+}
+
+.layout-type:hover {
+    background-color: rgb(136, 163, 236);
+}
+
+.layout-type:hover>div {
+    background-color: rgb(136, 163, 236);
+}
+
+.quarter-layout-block {
+    width: calc(50% - 3px);
+    height: calc(50% - 2px);
+    background-color: rgb(86, 127, 241);
+    border: 1px solid rgb(90, 90, 90);
+}
+
+.wide-layout-block {
+    width: calc(100% - 2px);
+    height: calc(50% - 2px);
+    background-color: rgb(86, 127, 241);
+    border: 1px solid rgb(90, 90, 90);
+}
+
+.heigh-layout-block {
+    width: calc(50% - 3px);
+    height: calc(100% - 2px);
+    background-color: rgb(86, 127, 241);
+    border: 1px solid rgb(90, 90, 90);
 }
