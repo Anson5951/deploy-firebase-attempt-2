@@ -1,49 +1,42 @@
-import { Component, ViewChild, OnInit, HostListener } from '@angular/core';
-import { YouTubePlayer } from '@angular/youtube-player';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
     selector: 'app-yeah',
     templateUrl: './yeah.component.html',
     styleUrls: ['./yeah.component.css']
 })
-export class YeahComponent implements OnInit {
+export class YeahComponent {
 
     layoutSelectorVisibility = false
+    selectedLayout: 'quarter' | 'height' | 'wide' = 'quarter'
+    vedioUsedClass: 'video-quarter-layout' | 'video-wide-layout' | 'video-height-layout' = 'video-quarter-layout'
 
     @HostListener('window:keydown', ['$event'])
     handleKeyDown(event: KeyboardEvent) {
-        console.log('KeyboardEvent',event);
+        console.log('KeyboardEvent', event);
         if (event.key == '`') {
             this.layoutSelectorVisibility = !this.layoutSelectorVisibility;
+        } else if (event.key == `Escape`) {
+            this.layoutSelectorVisibility = false;
         }
     }
 
-    // readonly vedioIds: string[] = [
-    //     'NajJFMnGMf0',
-    //     'PJH2AscfsNc',
-    //     'IXdszpdqzec',
-    //     'SWEyHRr12Jo',
-    // ]
-    // readonly playerVars: YT.PlayerVars = {
-    //     autoplay: 1,
-    //     loop: 0,
-    // }
-    // playerVarsList: YT.PlayerVars[] = [];
-
-    ngOnInit(): void {
-        // this.playerVarsList = this.vedioIds.map(x => ({
-        //     ...this.playerVars,
-        //     playlist: x
-        // }) as YT.PlayerVars)
-    }
-
-    layoutSelection_onClick(layout: 'quarter' | 'heigh' | 'wide') {
+    layoutSelection_onClick(layout: 'quarter' | 'height' | 'wide') {
         switch (layout) {
             case 'quarter':
+                console.log('quarter');
+                this.selectedLayout = 'quarter'
+                this.vedioUsedClass = 'video-quarter-layout'
                 break;
-            case 'heigh':
+            case 'height':
+                console.log('height');
+                this.selectedLayout = 'height'
+                this.vedioUsedClass = 'video-height-layout'
                 break;
             case 'wide':
+                console.log('wide');
+                this.selectedLayout = 'wide'
+                this.vedioUsedClass = 'video-wide-layout'
                 break;
         }
     }
