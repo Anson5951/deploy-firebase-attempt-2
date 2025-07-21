@@ -5,6 +5,8 @@ import { LoFiComponent } from './lo-fi/lo-fi.component';
 import { YeahComponent } from './yeah/yeah.component';
 import { NovelComponent } from './novel/novel.component';
 import { AbletonComponent } from './frontend-practice/Ableton/Ableton.component';
+import { JapanSongsComponent } from './lyrics/JapanSongs/JapanSongs.component';
+
 
 const routes: Routes = [
   { path: 'lofi', component: LoFiComponent },
@@ -12,6 +14,7 @@ const routes: Routes = [
   { path: 'yeah', component: YeahComponent },
   { path: 'novel', component: NovelComponent },
   { path: 'ableton', component: AbletonComponent },
+  { path: 'lyrics', component: JapanSongsComponent }
 ];
 
 @NgModule({
