@@ -6,9 +6,11 @@ import { YeahComponent } from './yeah/yeah.component';
 import { NovelComponent } from './novel/novel.component';
 import { AbletonComponent } from './frontend-practice/Ableton/Ableton.component';
 import { JapanSongsComponent } from './lyrics/JapanSongs/JapanSongs.component';
+import { HomeComponent } from './home/home.component';
 
 
 const routes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'lofi', component: LoFiComponent },
   { path: 'animate', component: AnimateTriggerComponent },
   { path: 'yeah', component: YeahComponent },
