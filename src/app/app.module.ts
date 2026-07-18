@@ -5,7 +5,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { YouTubePlayerModule } from '@angular/youtube-player';
 import { AnimateTriggerComponent } from './animate-trigger/animate-trigger.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,7 +25,6 @@ import { YeahComponent } from './yeah/yeah.component';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    YouTubePlayerModule,
     YoutubeComponent,
   ],
   providers: [],

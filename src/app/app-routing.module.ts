@@ -1,22 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AnimateTriggerComponent } from './animate-trigger/animate-trigger.component';
-import { LoFiComponent } from './lo-fi/lo-fi.component';
-import { YeahComponent } from './yeah/yeah.component';
-import { NovelComponent } from './novel/novel.component';
-import { AbletonComponent } from './frontend-practice/Ableton/Ableton.component';
-import { JapanSongsComponent } from './lyrics/JapanSongs/JapanSongs.component';
-import { HomeComponent } from './home/home.component';
-
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'lofi', component: LoFiComponent },
-  { path: 'animate', component: AnimateTriggerComponent },
-  { path: 'yeah', component: YeahComponent },
-  { path: 'novel', component: NovelComponent },
-  { path: 'ableton', component: AbletonComponent },
-  { path: 'lyrics', component: JapanSongsComponent }
+  { path: '', loadComponent: () => import('./home/home.component').then(m => m.HomeComponent) },
+  { path: 'lofi', loadComponent: () => import('./lo-fi/lo-fi.component').then(m => m.LoFiComponent) },
+  { path: 'animate', loadComponent: () => import('./animate-trigger/animate-trigger.component').then(m => m.AnimateTriggerComponent) },
+  { path: 'yeah', loadComponent: () => import('./yeah/yeah.component').then(m => m.YeahComponent) },
+  { path: 'novel', loadComponent: () => import('./novel/novel.component').then(m => m.NovelComponent) },
+  { path: 'ableton', loadComponent: () => import('./frontend-practice/Ableton/Ableton.component').then(m => m.AbletonComponent) },
+  { path: 'lyrics', loadComponent: () => import('./lyrics/JapanSongs/JapanSongs.component').then(m => m.JapanSongsComponent) }
 ];
 
 @NgModule({

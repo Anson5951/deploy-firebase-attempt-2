@@ -36,12 +36,12 @@ In angular.json:
   }
 }
 ```
-4. build
+4. build:
 build the app
 ```
 npm run build
 ```
-5. deploy
+5. deploy:
 after deploy, the url will be generated faster than server is ready. so we need to wait in a short period of time to let the pages display your app rather than default firebase page.
 ```
 firebase deploy
