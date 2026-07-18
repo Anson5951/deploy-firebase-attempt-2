@@ -11,6 +11,11 @@
         <div class="height-layout-block"> </div>
         <div class="height-layout-block"> </div>
     </div>
+    <div class="layout-type" (click)="layoutSelection_onClick('three-column')">
+        <div class="three-column-layout-block"> </div>
+        <div class="three-column-layout-block"> </div>
+        <div class="three-column-layout-block"> </div>
+    </div>
     <div class="layout-type" (click)="layoutSelection_onClick('wide')">
         <div class="wide-layout-block"> </div>
         <div class="wide-layout-block"> </div>
@@ -19,6 +24,6 @@
 <div class="video-container">
     <app-youtube [class]="vedioUsedClass" [exitKey]="'1'"></app-youtube>
     <app-youtube [class]="vedioUsedClass" [exitKey]="'2'"></app-youtube>
-    <app-youtube *ngIf="selectedLayout == 'quarter'" class="video-quarter-layout" [exitKey]="'3'"></app-youtube>
-    <app-youtube *ngIf="selectedLayout == 'quarter'" class="video-quarter-layout" [exitKey]="'4'"></app-youtube>
+    <app-youtube *ngIf="['quarter', 'three-column'].includes(selectedLayout)" [class]="vedioUsedClass" [exitKey]="'3'"></app-youtube>
+    <app-youtube *ngIf="['quarter'].includes(selectedLayout)" [class]="vedioUsedClass" [exitKey]="'4'"></app-youtube>
 </div>

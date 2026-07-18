@@ -8,8 +8,8 @@ import { Component, HostListener } from '@angular/core';
 export class YeahComponent {
 
     layoutSelectorVisibility = false
-    selectedLayout: 'quarter' | 'height' | 'wide' = 'quarter'
-    vedioUsedClass: 'video-quarter-layout' | 'video-wide-layout' | 'video-height-layout' = 'video-quarter-layout'
+    selectedLayout: 'quarter' | 'height' | 'wide' | 'three-column' = 'quarter'
+    vedioUsedClass: 'video-quarter-layout' | 'video-wide-layout' | 'video-height-layout' | 'video-three-column-layout' = 'video-quarter-layout'
 
     @HostListener('window:keydown', ['$event'])
     handleKeyDown(event: KeyboardEvent) {
@@ -21,7 +21,7 @@ export class YeahComponent {
         }
     }
 
-    layoutSelection_onClick(layout: 'quarter' | 'height' | 'wide') {
+    layoutSelection_onClick(layout: 'quarter' | 'height' | 'wide' | 'three-column') {
         switch (layout) {
             case 'quarter':
                 console.log('quarter');
@@ -37,6 +37,11 @@ export class YeahComponent {
                 console.log('wide');
                 this.selectedLayout = 'wide'
                 this.vedioUsedClass = 'video-wide-layout'
+                break;
+            case 'three-column':
+                console.log('three-column');
+                this.selectedLayout = 'three-column'
+                this.vedioUsedClass = 'video-three-column-layout'
                 break;
         }
     }
