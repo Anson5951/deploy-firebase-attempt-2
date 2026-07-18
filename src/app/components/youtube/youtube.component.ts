@@ -85,7 +85,16 @@ export class YoutubeComponent implements AfterViewInit {
         // https://youtu.be/qYspJLIHNyI?si=_thQJaik6M8uRTj_
         else if (this.input.startsWith('https://youtu.be/')) {
             return this.input.split('https://youtu.be/')[1].split('?')[0]
-        } else {
+        }
+        // https://youtube.com/shorts/X73Kd-Tc5so?si=KzbQHlmh9XYCy8b3
+        else if (this.input.startsWith('https://youtube.com/shorts/') && this.input.includes("?si=")) {
+            return this.input.split('https://youtube.com/shorts/')[1].split('?si=')[0]
+        }
+        // https://www.youtube.com/shorts/rVjYiXY_uGQ
+        else if (this.input.startsWith('https://www.youtube.com/shorts/')) {
+            return this.input.split('https://www.youtube.com/shorts/')[1]
+        }
+        else {
             console.log('something want wrong.', this.input)
             return '';
         }
