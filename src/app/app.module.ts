@@ -9,25 +9,24 @@ import { AnimateTriggerComponent } from './animate-trigger/animate-trigger.compo
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoFiComponent } from './lo-fi/lo-fi.component';
-import { YeahComponent } from './yeah/yeah.component';
+
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoFiComponent,
-    AnimateTriggerComponent,
-    YeahComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    YoutubeComponent,
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        LoFiComponent,
+        AnimateTriggerComponent,
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        YoutubeComponent,
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

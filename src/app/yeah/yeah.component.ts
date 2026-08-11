@@ -1,9 +1,19 @@
 import { Component, HostListener } from '@angular/core';
+import { YoutubeComponent } from '../components/youtube/youtube.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-yeah',
     templateUrl: './yeah.component.html',
-    styleUrls: ['./yeah.component.css']
+    styleUrls: ['./yeah.component.css'],
+    standalone: true,
+    imports: [
+        YoutubeComponent,
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule
+    ]
 })
 export class YeahComponent {
 

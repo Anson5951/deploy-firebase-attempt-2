@@ -30,15 +30,28 @@
     height: 100%;
 }
 
+.layoutSelector {
+    position: absolute;
+    background-color: rgb(236, 236, 236);
+    border: 2px solid rgb(235, 251, 147);
+    border-radius: 5px;
+    width: 50vw;
+    height: 100%;
+}
+
 .layout-type {
     background-color: white;
-    width: 100%;
-    height: 33%;
-    border: 1px solid rgb(255, 255, 182);
+    width: 95%;
+    height: 20%;
+    border: 2px solid rgb(4, 18, 79);
+    border-radius: 5px;
+    margin: 1%;
+    padding: 1%;
     display: flex;
-    gap: 1px;
-    row-gap: 1px;
+    gap: 1%;
+    row-gap: 1%;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .layout-type:hover {
@@ -49,29 +62,28 @@
     background-color: rgb(136, 163, 236);
 }
 
-.quarter-layout-block {
-    width: calc(50% - 3px);
-    height: calc(50% - 2px);
-    background-color: rgb(86, 127, 241);
-    border: 1px solid rgb(90, 90, 90);
+.quarter {
+    width: calc(50% - 10px);
+    height: calc(50% - 10px);
 }
 
-.wide-layout-block {
-    width: calc(100% - 2px);
-    height: calc(50% - 2px);
-    background-color: rgb(86, 127, 241);
-    border: 1px solid rgb(90, 90, 90);
+.wide {
+    width: calc(100% - 10px);
+    height: calc(50% - 10px);
 }
 
-.height-layout-block {
-    width: calc(50% - 3px);
-    height: calc(100% - 2px);
-    background-color: rgb(86, 127, 241);
-    border: 1px solid rgb(90, 90, 90);
+.height {
+    width: calc(50% - 10px);
+    height: calc(100% - 10px);
 }
-.three-column-layout-block {
-    width: calc(33% - 3px);
-    height: calc(100% - 2px);
+
+.three-column {
+    width: calc(33% - 10px);
+    height: calc(100% - 10px);
+}
+
+.layout-block {
     background-color: rgb(86, 127, 241);
     border: 1px solid rgb(90, 90, 90);
+    border-radius: 5px;
 }
