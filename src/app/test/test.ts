@@ -37,7 +37,7 @@ export class Test implements AfterViewInit, OnDestroy {
     @ViewChild('youtubePlayer')
     youtubePlayerRef?: ElementRef<HTMLDivElement>;
 
-    videoId = 'M6bpX6Ur6bM';
+    videoId = 'hbEzc0_p8Do';
     lyrics: LyricLine[] = [];
     currentIndex = -1;
     currentTime = 0;
@@ -199,7 +199,7 @@ export class Test implements AfterViewInit, OnDestroy {
 
     onToleranceInput(event: Event): void {
         const value = Number((event.target as HTMLInputElement).value);
-        this.tolerance = Number.isFinite(value) ? Math.max(0, value) : 0;
+        this.tolerance = Number.isFinite(value) ? value : 0;
         this.updateCurrentLyric();
     }
 
