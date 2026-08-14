@@ -41,7 +41,7 @@ export class Test implements AfterViewInit, OnDestroy {
     lyrics: LyricLine[] = [];
     currentIndex = -1;
     currentTime = 0;
-    private tolerance = 0; // 1.35
+    tolerance = 0.0;
     private lyricMapPath = 'assets/lyric-map.json';
     private syncTimer?: ReturnType<typeof setInterval>;
     public youtubeReady = false;
@@ -195,6 +195,12 @@ export class Test implements AfterViewInit, OnDestroy {
             clearInterval(this.syncTimer);
             this.syncTimer = undefined;
         }
+    }
+
+    onToleranceInput(event: Event): void {
+        const value = Number((event.target as HTMLInputElement).value);
+        this.tolerance = Number.isFinite(value) ? Math.max(0, value) : 0;
+        this.updateCurrentLyric();
     }
 
     private updateCurrentLyric(): void {

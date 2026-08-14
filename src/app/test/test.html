@@ -1,5 +1,15 @@
 <div class="player-lyric-layout">
     <div class="player-panel">
+        <div class="tolerance-control">
+            <label for="toleranceInput">Tolerance (s)</label>
+            <input
+                id="toleranceInput"
+                type="number"
+                step="0.1"
+                [value]="tolerance"
+                (input)="onToleranceInput($event)"
+            />
+        </div>
         <div #youtubePlayer id="youtube-player" class="youtube-player"></div>
     </div>
 
