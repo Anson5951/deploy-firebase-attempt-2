@@ -18,6 +18,7 @@ import { YoutubeService } from './youtube.service';
 interface LyricLine {
     time: number;
     text: string;
+    html?: string;
 }
 
 interface LyricConfig {
@@ -96,6 +97,10 @@ export class Test implements AfterViewInit, OnDestroy {
         }
     }
 
+    private convertRubyFormat(text: string): string {
+        return text.replace(/\{([^|]+)\|([^}]+)\}/g, '<ruby>$1<rt>$2</rt></ruby>');
+    }
+
     private parseLrc(lrc: string): LyricLine[] {
 
         const result: LyricLine[] = [];
@@ -130,8 +135,9 @@ export class Test implements AfterViewInit, OnDestroy {
             const time = minutes * 60 + seconds + milliseconds / 1000;
 
             const text = match[4].trim();
+            const html = this.convertRubyFormat(text);
 
-            result.push({ time, text });
+            result.push({ time, text, html });
         }
 
         result.sort((a, b) => a.time - b.time);

@@ -16,8 +16,8 @@
     <div class="lyrics-panel">
         <div class="lyrics">
             <div *ngFor="let lyric of lyrics; let i = index" class="lyric-line" [class.active]="i === currentIndex"
-                [class.disabled]="!youtubeReady" (click)="youtubeReady && seekToLyric(lyric)">
-                {{ lyric.text }}
+                [class.disabled]="!youtubeReady" (click)="youtubeReady && seekToLyric(lyric)"
+                [innerHTML]="lyric.html || lyric.text">
             </div>
         </div>
     </div>

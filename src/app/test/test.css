@@ -81,6 +81,16 @@
     cursor: default;
 }
 
+.lyric-line ruby {
+    display: ruby;
+}
+
+.lyric-line rt {
+    font-size: 0.65em;
+    color: #666;
+    margin: 0 2px;
+}
+
 @media (max-width: 768px) {
     .player-lyric-layout {
         flex-direction: column;
