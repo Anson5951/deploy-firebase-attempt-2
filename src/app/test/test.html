@@ -1,11 +1,14 @@
-<div class="container">
-    <div class="left">
-        <div id="youtube-player"></div>
+<div class="player-lyric-layout">
+    <div class="player-panel">
+        <div #youtubePlayer id="youtube-player" class="youtube-player"></div>
     </div>
-    {{yt.getCurrentTime()}}
-    <div class="right lyrics" #lyricContainer>
-        <div *ngFor="let line of lyrics; let i = index" [class.active]="i === currentIndex">
-            {{ line.text }}
+
+    <div class="lyrics-panel">
+        <div class="lyrics">
+            <div *ngFor="let lyric of lyrics; let i = index" class="lyric-line" [class.active]="i === currentIndex"
+                [class.disabled]="!youtubeReady" (click)="youtubeReady && seekToLyric(lyric)">
+                {{ lyric.text }}
+            </div>
         </div>
     </div>
 </div>

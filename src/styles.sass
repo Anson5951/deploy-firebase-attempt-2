@@ -1,5 +1,15 @@
 body
   margin: 0px
-youtube-player > iframe
-  width: 50%
-  height: 50vh
+
+.youtube-player
+  width: 100%
+  max-width: 560px
+  aspect-ratio: 16 / 9
+  overflow: hidden
+  background: #000
+
+.youtube-player > iframe
+  display: block
+  width: 100% !important
+  height: 100% !important
+  border: 0

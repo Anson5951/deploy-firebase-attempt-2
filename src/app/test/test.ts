@@ -1,128 +1,312 @@
 import {
-  Component,
-  ElementRef,
-  ViewChild,
-  NgZone,
-  OnDestroy
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    NgZone,
+    OnDestroy,
+    ViewChild
 } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
+
 import { YoutubeService } from './youtube.service';
 
 interface LyricLine {
-  time: number;
-  text: string;
+    time: number;
+    text: string;
+}
+
+interface LyricConfig {
+    [videoId: string]: string;
 }
 
 @Component({
-  selector: 'app-lyric-player',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './test.html',
-  styleUrls: ['./test.css']
+    selector: 'app-lyric-player',
+    standalone: true,
+    imports: [CommonModule],
+    templateUrl: './test.html',
+    styleUrls: ['./test.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Test implements OnDestroy {
-  videoId = 'dQw4w9WgXcQ';
+export class Test implements AfterViewInit, OnDestroy {
 
-  lyrics: LyricLine[] = [];
-  currentIndex = -1;
+    @ViewChild('youtubePlayer')
+    youtubePlayerRef?: ElementRef<HTMLDivElement>;
 
-  @ViewChild('lyricContainer')
-  lyricContainer!: ElementRef<HTMLDivElement>;
+    videoId = 'M6bpX6Ur6bM';
+    lyrics: LyricLine[] = [];
+    currentIndex = -1;
+    currentTime = 0;
+    private tolerance = 0; // 1.35
+    private lyricMapPath = 'assets/lyric-map.json';
+    private syncTimer?: ReturnType<typeof setInterval>;
+    public youtubeReady = false;
+    private lastScrolledIndex = -1;
 
-  private timer: any;
+    constructor(
+        private http: HttpClient,
+        public youtubeService: YoutubeService,
+        private cdr: ChangeDetectorRef,
+        private ngZone: NgZone
+    ) { }
 
-  constructor(
-    private http: HttpClient,
-    public yt: YoutubeService,
-    private zone: NgZone
-  ) {}
-
-  async ngOnInit() {
-    // 先載入歌詞
-    await this.loadCustomLyrics(this.videoId);
-
-    // 初始化 YouTube
-    await this.yt.loadApi();
-    await this.yt.createPlayer('youtube-player', this.videoId);
-
-    // 每 100ms 同步一次
-    this.timer = setInterval(() => {
-      this.zone.run(() => {
-        this.syncLyrics();
-      });
-    }, 100);
-  }
-
-  ngOnDestroy() {
-    clearInterval(this.timer);
-  }
-
-  async loadCustomLyrics(videoId: string) {
-    const map = await firstValueFrom(
-      this.http.get<Record<string, string>>('assets/lyric-map.json')
-    );
-
-    const file = map[videoId];
-
-    if (!file) {
-      this.lyrics = [{ time: 0, text: '沒有歌詞' }];
-      return;
+    async ngAfterViewInit(): Promise<void> {
+        await this.loadLyrics();
+        await this.initYoutube();
     }
 
-    const lrc = await firstValueFrom(
-      this.http.get(file, { responseType: 'text' })
-    );
-
-    this.lyrics = this.parseLRC(lrc);
-  }
-
-  parseLRC(lrc: string): LyricLine[] {
-    return lrc
-      .split('\n')
-      .map(line => {
-        const match = line.match(/\[(\d+):(\d+\.\d+)\](.*)/);
-        if (!match) return null;
-
-        return {
-          time: Number(match[1]) * 60 + Number(match[2]),
-          text: match[3].trim()
-        };
-      })
-      .filter(Boolean) as LyricLine[];
-  }
-
-  syncLyrics() {
-    const currentTime = this.yt.getCurrentTime();
-
-    let index = -1;
-
-    for (let i = 0; i < this.lyrics.length; i++) {
-      if (currentTime + 1.4 >= this.lyrics[i].time) {
-        index = i;
-      } else {
-        break;
-      }
+    ngOnDestroy(): void {
+        this.stopSyncTimer();
+        this.youtubeService.destroy();
     }
 
-    if (index !== this.currentIndex) {
-      this.currentIndex = index;
-      this.scrollToCurrent();
+    private async loadLyrics(): Promise<void> {
+        try {
+            const config = await firstValueFrom(
+                this.http.get<LyricConfig>(
+                    this.lyricMapPath
+                )
+            );
+
+            const lyricPath = config[this.videoId];
+
+            if (!lyricPath) {
+                console.warn(`找不到 ${this.videoId} 的歌詞`);
+                this.lyrics = [];
+                this.cdr.markForCheck();
+                return;
+            }
+            const lrc = await firstValueFrom(
+                this.http.get(lyricPath, { responseType: 'text' }
+                )
+            );
+
+            this.lyrics = this.parseLrc(lrc);
+            console.log('Lyrics:', this.lyrics);
+            this.cdr.markForCheck();
+
+        } catch (error) {
+            console.error('載入歌詞失敗', error);
+            this.lyrics = [];
+            this.cdr.markForCheck();
+        }
     }
-  }
 
-  scrollToCurrent() {
-    if (!this.lyricContainer) return;
+    private parseLrc(lrc: string): LyricLine[] {
 
-    const container = this.lyricContainer.nativeElement;
-    const current = container.children[this.currentIndex] as HTMLElement;
+        const result: LyricLine[] = [];
+        const lines = lrc.split(/\r?\n/);
 
-    if (current) {
-      current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center'
-      });
+        for (const line of lines) {
+            const match = line.match(
+                /^\[(\d{1,2}):(\d{2})(?:\.(\d{1,3}))?\](.*)$/
+            );
+
+            if (!match) {
+                continue;
+            }
+
+            const minutes = Number(match[1]);
+            const seconds = Number(match[2]);
+            let milliseconds = 0;
+
+            if (match[3]) {
+                const decimal = match[3];
+                if (decimal.length === 1) {
+                    milliseconds = Number(decimal) * 100;
+                } else if (
+                    decimal.length === 2
+                ) {
+                    milliseconds = Number(decimal) * 10;
+                } else {
+                    milliseconds = Number(decimal);
+                }
+            }
+
+            const time = minutes * 60 + seconds + milliseconds / 1000;
+
+            const text = match[4].trim();
+
+            result.push({ time, text });
+        }
+
+        result.sort((a, b) => a.time - b.time);
+
+        return result;
     }
-  }
+
+    private async initYoutube(): Promise<void> {
+        const playerElement = this.youtubePlayerRef?.nativeElement;
+        const playerId = playerElement?.id || 'youtube-player';
+
+        if (playerElement && !playerElement.id) {
+            playerElement.id = playerId;
+        }
+
+        this.youtubeReady = false;
+
+        await this.youtubeService.createPlayer(
+            playerId,
+            this.videoId,
+            (state: number) => { this.onYoutubeStateChange(state); },
+            () => {
+                console.log('Component: YouTube Ready');
+                this.youtubeReady = true;
+                this.cdr.markForCheck();
+            }
+        );
+
+        this.youtubeReady = true;
+        this.cdr.markForCheck();
+    }
+
+    private onYoutubeStateChange(state: number): void {
+
+        if (state === window.YT.PlayerState.PLAYING) {
+            this.startSyncTimer();
+            return;
+        }
+
+        if (state === window.YT.PlayerState.PAUSED) {
+            this.stopSyncTimer();
+            this.updateCurrentLyric();
+            return;
+        }
+
+        if (state === window.YT.PlayerState.ENDED) {
+            this.stopSyncTimer();
+            this.updateCurrentLyric();
+        }
+    }
+
+    private startSyncTimer(): void {
+        this.stopSyncTimer();
+        this.syncTimer = setInterval(() => {
+            this.updateCurrentLyric();
+        }, 100);
+    }
+
+    private stopSyncTimer(): void {
+        if (this.syncTimer) {
+            clearInterval(this.syncTimer);
+            this.syncTimer = undefined;
+        }
+    }
+
+    private updateCurrentLyric(): void {
+
+        if (!this.youtubeReady) {
+            return;
+        }
+
+        const time = this.youtubeService.getCurrentTime();
+        this.currentTime = time;
+        const index = this.findCurrentLyricIndex(time);
+
+        if (index === this.currentIndex) {
+            return;
+        }
+
+        this.ngZone.run(() => {
+            this.currentIndex = index;
+            this.cdr.markForCheck();
+            this.scrollToCurrentLyric();
+        });
+    }
+
+    private findCurrentLyricIndex(time: number): number {
+
+        if (this.lyrics.length === 0) {
+            return -1;
+        }
+
+        for (let i = this.lyrics.length - 1; i >= 0; i--) {
+            const lyricTime = this.lyrics[i].time;
+
+            if (time >= lyricTime - this.tolerance) {
+                return i;
+            }
+        }
+
+        return 0;
+    }
+
+    seekToLyric(lyric: LyricLine): void {
+
+        if (!this.youtubeReady) {
+            console.warn('YouTube 尚未 Ready');
+            return;
+        }
+        const time = lyric.time - this.tolerance;
+        console.log(`跳轉到 ${time}s`, lyric.text);
+        this.youtubeService.seekTo(time);
+        this.youtubeService.play();
+        this.ngZone.run(() => {
+            this.currentTime = time;
+            this.currentIndex = this.findCurrentLyricIndex(time);
+            this.cdr.markForCheck();
+            this.scrollToCurrentLyric();
+        });
+    }
+    private scrollToCurrentLyric(): void {
+        if (this.currentIndex < 0) {
+            return;
+        }
+        if (this.lastScrolledIndex === this.currentIndex) {
+            return;
+        }
+        this.lastScrolledIndex = this.currentIndex;
+
+        setTimeout(() => {
+            const element = document.querySelector(
+                '.lyric-line.active'
+            ) as HTMLElement | null;
+
+            if (!element) {
+                return;
+            }
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }, 0);
+    }
+    play(): void {
+        this.youtubeService.play();
+    }
+
+    pause(): void {
+        this.youtubeService.pause();
+    }
+    async changeVideo(
+        videoId: string
+    ): Promise<void> {
+        this.stopSyncTimer();
+        this.youtubeReady = false;
+        this.videoId = videoId;
+        this.lyrics = [];
+        this.currentIndex = -1;
+        this.currentTime = 0;
+        this.lastScrolledIndex = -1;
+
+        await this.loadLyrics();
+
+        this.youtubeService.loadVideo(
+            this.videoId
+        );
+
+        this.cdr.markForCheck();
+    }
+
+    async reloadLyrics(): Promise<void> {
+        this.currentIndex = -1;
+        this.currentTime = 0;
+        this.lastScrolledIndex = -1;
+        await this.loadLyrics();
+        this.updateCurrentLyric();
+    }
 }
