@@ -41,7 +41,7 @@ export class Test implements AfterViewInit, OnDestroy {
     @ViewChild('youtubePlayer')
     youtubePlayerRef?: ElementRef<HTMLDivElement>;
 
-    videoId = 'dQw4w9WgXcQ';
+    videoId = 'BwASeebfkx4';
     lyrics: LyricLine[] = [];
     currentIndex = -1;
     currentTime = 0;
@@ -80,7 +80,7 @@ export class Test implements AfterViewInit, OnDestroy {
 
             if (!videoConfig) {
                 console.warn(`找不到 ${this.videoId} 的歌詞`);
-                this.lyrics = [];
+                this.lyrics = [{text: "目前尚未提供此影片歌詞", time: 0}];
                 this.cdr.markForCheck();
                 return;
             }
