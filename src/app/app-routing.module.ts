@@ -9,7 +9,8 @@ const routes: Routes = [
   { path: 'novel', loadComponent: () => import('./novel/novel.component').then(m => m.NovelComponent) },
   { path: 'ableton', loadComponent: () => import('./frontend-practice/Ableton/Ableton.component').then(m => m.AbletonComponent) },
   { path: 'yasashisuisei', loadComponent: () => import('./lyrics/Yasashisuisei/Yasashisuisei.component').then(m => m.YasashisuiseiComponent) },
-  { path: 'gunjo', loadComponent: () => import('./lyrics/gunjo/gunjo.component').then(m => m.GunjoComponent) }
+  { path: 'gunjo', loadComponent: () => import('./lyrics/gunjo/gunjo.component').then(m => m.GunjoComponent) },
+  { path: 'test', loadComponent: () => import('./test/test').then(m => m.Test) }
 ];
 
 @NgModule({

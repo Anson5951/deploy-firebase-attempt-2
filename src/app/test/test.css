@@ -1,0 +1,18 @@
+.lyrics {
+    width: 360px;
+    height: 390px;
+    overflow-y: auto;
+    background: #111;
+    color: #888;
+    padding: 20px;
+}
+
+.lyrics div {
+    padding: 12px 0;
+    transition: all .25s;
+}
+
+.lyrics div.active {
+    color: #00e5ff;
+    font-weight: bold;
+}
