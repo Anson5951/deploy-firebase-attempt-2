@@ -2,11 +2,7 @@
   "name": "deploy-firebase-attempt-2",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
     "start": "ng serve -o",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
     "deploy": "ng build && firebase login --reauth && firebase deploy"
   },
   "private": true,
