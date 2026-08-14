@@ -1,5 +1,10 @@
 {
-    "dQw4w9WgXcQ": "assets/lyrics/rickroll.lrc",
-    "hbEzc0_p8Do": "assets/lyrics/yoasobi-comet.lrc",
-    "M6bpX6Ur6bM": "assets/lyrics/yoasobi-comet.lrc"
+    "dQw4w9WgXcQ": {
+        "lyrics": "assets/lyrics/rickroll.lrc",
+        "tolerance": 1.35
+    },
+    "hbEzc0_p8Do": {
+        "lyrics": "assets/lyrics/yoasobi-comet.lrc",
+        "tolerance": -1.35
+    }
 }

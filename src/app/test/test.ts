@@ -22,7 +22,10 @@ interface LyricLine {
 }
 
 interface LyricConfig {
-    [videoId: string]: string;
+    [videoId: string]: {
+        lyrics: string;
+        tolerance: number;
+    };
 }
 
 @Component({
@@ -38,7 +41,7 @@ export class Test implements AfterViewInit, OnDestroy {
     @ViewChild('youtubePlayer')
     youtubePlayerRef?: ElementRef<HTMLDivElement>;
 
-    videoId = 'hbEzc0_p8Do';
+    videoId = 'dQw4w9WgXcQ';
     lyrics: LyricLine[] = [];
     currentIndex = -1;
     currentTime = 0;
@@ -73,14 +76,18 @@ export class Test implements AfterViewInit, OnDestroy {
                 )
             );
 
-            const lyricPath = config[this.videoId];
+            const videoConfig = config[this.videoId];
 
-            if (!lyricPath) {
+            if (!videoConfig) {
                 console.warn(`找不到 ${this.videoId} 的歌詞`);
                 this.lyrics = [];
                 this.cdr.markForCheck();
                 return;
             }
+
+            const lyricPath = videoConfig.lyrics;
+            this.tolerance = videoConfig.tolerance;
+
             const lrc = await firstValueFrom(
                 this.http.get(lyricPath, { responseType: 'text' }
                 )
