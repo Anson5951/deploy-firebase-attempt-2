@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
-import { YoutubeService } from './youtube.service';
+import { YoutubeService } from 'src/service/youtube.service';
 
 interface LyricLine {
     time: number;
@@ -29,14 +29,13 @@ interface LyricConfig {
 }
 
 @Component({
-    selector: 'app-lyric-player',
     standalone: true,
     imports: [CommonModule],
-    templateUrl: './test.html',
-    styleUrls: ['./test.css'],
+    templateUrl: './lyrics.html',
+    styleUrls: ['./lyrics.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Test implements AfterViewInit, OnDestroy {
+export class Lyrics implements AfterViewInit, OnDestroy {
 
     @ViewChild('youtubePlayer')
     youtubePlayerRef?: ElementRef<HTMLDivElement>;
@@ -80,7 +79,7 @@ export class Test implements AfterViewInit, OnDestroy {
 
             if (!videoConfig) {
                 console.warn(`找不到 ${this.videoId} 的歌詞`);
-                this.lyrics = [{text: "目前尚未提供此影片歌詞", time: 0}];
+                this.lyrics = [{ text: "目前尚未提供此影片歌詞", time: 0 }];
                 this.cdr.markForCheck();
                 return;
             }
