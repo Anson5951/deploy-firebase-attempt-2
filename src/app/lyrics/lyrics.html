@@ -1,14 +1,17 @@
 <div class="player-lyric-layout">
+    {{currentTime}}
     <div class="player-panel">
         <div class="tolerance-control">
+            <label for="videoSelect">歌曲</label>
+            <select id="videoSelect" [(ngModel)]="videoId" (change)="onVideoChange()">
+                <option value="" disabled selected>請選擇歌曲</option>
+                <option *ngFor="let config of lyricConfig | keyvalue" [value]="config.key">{{ config.value.name }}</option>
+            </select>
+        </div>
+        <div class="tolerance-control">
             <label for="toleranceInput">Tolerance (s)</label>
-            <input
-                id="toleranceInput"
-                type="number"
-                step="0.1"
-                [value]="tolerance"
-                (input)="onToleranceInput($event)"
-            />
+            <input id="toleranceInput" type="number" step="0.1" [value]="tolerance"
+                (input)="onToleranceInput($event)" />
         </div>
         <div #youtubePlayer id="youtube-player" class="youtube-player"></div>
     </div>

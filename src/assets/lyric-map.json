@@ -1,13 +1,16 @@
 {
     "dQw4w9WgXcQ": {
+        "name": "Rick Roll",
         "lyrics": "assets/lyrics/rickroll.lrc",
         "tolerance": 1.35
     },
     "hbEzc0_p8Do": {
+        "name": "Yoasobi - 優しい彗星",
         "lyrics": "assets/lyrics/yoasobi-comet.lrc",
         "tolerance": -1.35
     },
     "BwASeebfkx4": {
+        "name": "Yoasobi - 群青",
         "lyrics": "assets/lyrics/yoasobi-gunjou.lrc",
         "tolerance": -1.1
     }

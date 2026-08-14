@@ -1,4 +1,5 @@
 import {
+    OnInit,
     AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -14,6 +15,7 @@ import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
 import { YoutubeService } from 'src/service/youtube.service';
+import { FormsModule } from '@angular/forms';
 
 interface LyricLine {
     time: number;
@@ -23,6 +25,7 @@ interface LyricLine {
 
 interface LyricConfig {
     [videoId: string]: {
+        name: string;
         lyrics: string;
         tolerance: number;
     };
@@ -30,7 +33,7 @@ interface LyricConfig {
 
 @Component({
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, FormsModule],
     templateUrl: './lyrics.html',
     styleUrls: ['./lyrics.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -40,11 +43,12 @@ export class Lyrics implements AfterViewInit, OnDestroy {
     @ViewChild('youtubePlayer')
     youtubePlayerRef?: ElementRef<HTMLDivElement>;
 
-    videoId = 'BwASeebfkx4';
+    videoId = 'dQw4w9WgXcQ';
     lyrics: LyricLine[] = [];
     currentIndex = -1;
     currentTime = 0;
     tolerance = 0.0;
+    lyricConfig: LyricConfig = {};
     private lyricMapPath = 'assets/lyric-map.json';
     private syncTimer?: ReturnType<typeof setInterval>;
     public youtubeReady = false;
@@ -57,7 +61,27 @@ export class Lyrics implements AfterViewInit, OnDestroy {
         private ngZone: NgZone
     ) { }
 
+    private async loadLyricConfig(): Promise<void> {
+        try {
+            this.lyricConfig = await firstValueFrom(
+                this.http.get<LyricConfig>(
+                    this.lyricMapPath
+                )
+            );
+
+            this.cdr.markForCheck();
+        } catch (error) {
+            console.error('載入歌詞配置失敗', error);
+        }
+    }
+
     async ngAfterViewInit(): Promise<void> {
+        await this.loadLyricConfig();
+
+        if (!this.videoId) {
+            return;
+        }
+
         await this.loadLyrics();
         await this.initYoutube();
     }
@@ -316,7 +340,7 @@ export class Lyrics implements AfterViewInit, OnDestroy {
         this.youtubeService.loadVideo(
             this.videoId
         );
-
+        this.youtubeReady = true;
         this.cdr.markForCheck();
     }
 
@@ -326,5 +350,11 @@ export class Lyrics implements AfterViewInit, OnDestroy {
         this.lastScrolledIndex = -1;
         await this.loadLyrics();
         this.updateCurrentLyric();
+    }
+
+    onVideoChange(): void {
+        if (this.videoId) {
+            this.changeVideo(this.videoId);
+        }
     }
 }
